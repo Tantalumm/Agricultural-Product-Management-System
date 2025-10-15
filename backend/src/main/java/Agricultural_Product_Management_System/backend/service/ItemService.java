@@ -1,9 +1,9 @@
-package service;
+package Agricultural_Product_Management_System.backend.service;
 
-import entity.Item;
+import Agricultural_Product_Management_System.backend.entity.Item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import repository.ItemRepository;
+import Agricultural_Product_Management_System.backend.repository.ItemRepository;
 
 @Service
 @RequiredArgsConstructor
