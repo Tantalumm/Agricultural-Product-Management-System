@@ -1,4 +1,4 @@
-package entity;
+package Agricultural_Product_Management_System.backend.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
