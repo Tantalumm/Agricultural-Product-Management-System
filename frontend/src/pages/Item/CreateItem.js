@@ -7,10 +7,10 @@ import { useNavigate } from "react-router-dom";
 
 const CreateItem = () => {
     const [fromData, setFormData] = useState({
-        itemName: "",
-        itemDescription: "",
-        itemPrice: "",
-        itemQuantity: ""
+        name: "",
+        description: "",
+        price: "",
+        quantity: ""
     }
     );
 
@@ -31,10 +31,9 @@ const CreateItem = () => {
         try{
             const response = await fetch('http://localhost:8080/api/item',{
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(fromData),
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(fromData)
+                
             });
             const data = await response.json();
             console.log("Item Created Success: ", data);
@@ -55,7 +54,7 @@ const CreateItem = () => {
                             type="text"
                             name="Item Name"
                             placeholder="Enter Item Name"
-                            value={FormData.itemName}
+                            value={fromData.name}
                             onChange={handleInputChange}
                         />
                     </Form.Group>
@@ -64,7 +63,7 @@ const CreateItem = () => {
                             type="text"
                             name="Item Description"
                             placeholder="Enter Item Description"
-                            value={FormData.itemDescription}
+                            value={fromData.description}
                             onChange={handleInputChange}
                         />
                     </Form.Group>
@@ -73,7 +72,7 @@ const CreateItem = () => {
                             type="text"
                             name="Item Price"
                             placeholder="Enter Item Price"
-                            value={FormData.itemPrice}
+                            value={fromData.price}
                             onChange={handleInputChange}
                         />
                     </Form.Group>
@@ -82,7 +81,7 @@ const CreateItem = () => {
                             type="text"
                             name="Item Quantity"
                             placeholder="Enter Item Quantity"
-                            value={FormData.itemQuantity}
+                            value={fromData.quantity}
                             onChange={handleInputChange}
                         />
                     </Form.Group>
