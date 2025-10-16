@@ -52,7 +52,7 @@ const CreateItem = () => {
                     <Form.Group controlId="FormBasicName">
                         <Form.Control
                             type="text"
-                            name="Item Name"
+                            name="name"
                             placeholder="Enter Item Name"
                             value={fromData.name}
                             onChange={handleInputChange}
@@ -61,7 +61,7 @@ const CreateItem = () => {
                     <Form.Group controlId="FormBasicName">
                         <Form.Control
                             type="text"
-                            name="Item Description"
+                            name="description"
                             placeholder="Enter Item Description"
                             value={fromData.description}
                             onChange={handleInputChange}
@@ -70,7 +70,7 @@ const CreateItem = () => {
                     <Form.Group controlId="FormBasicName">
                         <Form.Control
                             type="text"
-                            name="Item Price"
+                            name="price"
                             placeholder="Enter Item Price"
                             value={fromData.price}
                             onChange={handleInputChange}
@@ -79,7 +79,7 @@ const CreateItem = () => {
                     <Form.Group controlId="FormBasicName">
                         <Form.Control
                             type="text"
-                            name="Item Quantity"
+                            name="quantity"
                             placeholder="Enter Item Quantity"
                             value={fromData.quantity}
                             onChange={handleInputChange}
