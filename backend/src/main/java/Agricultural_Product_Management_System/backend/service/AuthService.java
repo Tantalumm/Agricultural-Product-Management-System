@@ -1,5 +1,7 @@
 package Agricultural_Product_Management_System.backend.service;
 
+import Agricultural_Product_Management_System.backend.dto.LoginRequest;
+import Agricultural_Product_Management_System.backend.dto.LoginResponse;
 import Agricultural_Product_Management_System.backend.dto.RegisterRequest;
 import Agricultural_Product_Management_System.backend.entity.User;
 import Agricultural_Product_Management_System.backend.repository.UserRepository;
@@ -28,6 +30,21 @@ public class AuthService {
         user.setEmail(request.email().toLowerCase().trim());
         user.setPassword(encoder.encode(request.password()));
         return userRepository.save(user);
+    }
+    public LoginResponse login(LoginRequest request) {
+        try{
+            User user = userRepository.findByUsername(request.username()).orElse(null);
+            if (user == null) {
+                return new LoginResponse(false, "Username not found");
+            }
+            if (!encoder.matches(request.password(), user.getPassword())) {
+                return new LoginResponse(false, "Wrong password");
+            }
+        }
+        catch (Exception e){
+            return new LoginResponse(false, e.getMessage());
+        }
+        return new LoginResponse(true, "Login in successfully");
     }
 }
 

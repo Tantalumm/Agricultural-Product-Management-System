@@ -16,7 +16,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // ปิด CSRF สำหรับ REST API
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/register").permitAll() // เปิดทางให้สมัคร
+                        .requestMatchers("/auth/register", "/auth/login").permitAll() // เปิดทางให้สมัคร
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // กันเคส CORS preflight
                         .anyRequest().authenticated()
                 );

@@ -1,5 +1,7 @@
 package Agricultural_Product_Management_System.backend.controller;
 
+import Agricultural_Product_Management_System.backend.dto.LoginRequest;
+import Agricultural_Product_Management_System.backend.dto.LoginResponse;
 import Agricultural_Product_Management_System.backend.dto.RegisterRequest;
 import Agricultural_Product_Management_System.backend.dto.RegisterResponse;
 import Agricultural_Product_Management_System.backend.entity.User;
@@ -23,4 +25,11 @@ public class AuthController {
         User user = authService.registerUser(request);
         return ResponseEntity.ok(RegisterResponse.from(user));
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request){
+        LoginResponse response = authService.login(request);
+        return ResponseEntity.ok(response);
+    }
+
 }
