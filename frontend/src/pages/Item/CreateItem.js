@@ -6,7 +6,14 @@ import { useNavigate } from "react-router-dom";
 
 
 const CreateItem = () => {
-    const [fromData, setFormData] = useState({
+
+    const USERNAME = process.env.REACT_APP_USERNAME;
+    const PASSWORD = process.env.REACT_APP_PASSWORD;
+
+    const encodedCredentials = btoa(`${USERNAME}:${PASSWORD}`);
+
+
+    const [formData, setFormData] = useState({
         name: "",
         description: "",
         price: "",
@@ -17,7 +24,7 @@ const CreateItem = () => {
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setFormData({
-            ...fromData,
+            ...formData,
             [name]: value,
         });
     }
@@ -26,24 +33,30 @@ const CreateItem = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(fromData);
+        console.log(formData);
+        console.log(encodedCredentials);
+        console.log(USERNAME);
+        console.log(PASSWORD);
 
-        try{
-            const response = await fetch('http://localhost:8080/api/item',{
+        try {
+            const response = await fetch('http://localhost:8080/api/item', {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(fromData)
-                
+               headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Basic ${encodedCredentials}`
+                },
+                body: JSON.stringify(formData)
+
             });
             const data = await response.json();
             console.log("Item Created Success: ", data);
             navigate('/');
         }
-        catch(error){
+        catch (error) {
             console.log("error: ", error.message);
         }
-    } 
-    
+    }
+
     return (
         <>
             <div className="center-form">
@@ -54,7 +67,7 @@ const CreateItem = () => {
                             type="text"
                             name="name"
                             placeholder="Enter Item Name"
-                            value={fromData.name}
+                            value={formData.name}
                             onChange={handleInputChange}
                         />
                     </Form.Group>
@@ -63,7 +76,7 @@ const CreateItem = () => {
                             type="text"
                             name="description"
                             placeholder="Enter Item Description"
-                            value={fromData.description}
+                            value={formData.description}
                             onChange={handleInputChange}
                         />
                     </Form.Group>
@@ -72,7 +85,7 @@ const CreateItem = () => {
                             type="text"
                             name="price"
                             placeholder="Enter Item Price"
-                            value={fromData.price}
+                            value={formData.price}
                             onChange={handleInputChange}
                         />
                     </Form.Group>
@@ -81,7 +94,7 @@ const CreateItem = () => {
                             type="text"
                             name="quantity"
                             placeholder="Enter Item Quantity"
-                            value={fromData.quantity}
+                            value={formData.quantity}
                             onChange={handleInputChange}
                         />
                     </Form.Group>
