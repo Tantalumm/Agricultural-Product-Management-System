@@ -1,8 +1,6 @@
-package Agricultural_Product_Management_System.backend.dto;
+package Agricultural_Product_Management_System.backend.model;
 
 import Agricultural_Product_Management_System.backend.entity.User;
-
-import java.time.Instant;
 
 public record RegisterResponse (
     Long id,

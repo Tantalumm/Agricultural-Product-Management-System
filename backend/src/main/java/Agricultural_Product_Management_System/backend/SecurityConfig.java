@@ -24,7 +24,7 @@ public class SecurityConfig {
                     return corsConfig;
                 }))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/register", "/auth/login").permitAll() // เปิดทางให้สมัคร
+                        .requestMatchers("/auth/register", "/auth/login", "/item/create").permitAll() // เปิดทางให้สมัคร
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // กันเคส CORS preflight
                         .anyRequest().authenticated()
                 );
