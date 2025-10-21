@@ -1,0 +1,116 @@
+import "./Register.css";
+import { useState } from "react";
+import Button from "react-bootstrap/Button";
+import { useNavigate, Link } from "react-router-dom";
+import { Form } from "react-bootstrap"; 
+import Spinner from "../../components/Spinner";
+
+const Register = () => {
+
+    const USERNAME = process.env.REACT_APP_USERNAME;
+    const PASSWORD = process.env.REACT_APP_PASSWORD;
+
+    const encodedCredentials = btoa(`${USERNAME}:${PASSWORD}`);
+
+    const [formData, setFormData] = useState({
+        username: "",
+        email : "",
+        name : "",
+        password: ""
+    });
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+        console.log(name + " : " + value);
+    }
+
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        console.log(formData);
+        console.log(encodedCredentials);
+        console.log(USERNAME);
+        console.log(PASSWORD);
+        try {
+            setLoading(true);
+            const response = await fetch('http://localhost:8080/auth/register', {   
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Basic ${encodedCredentials}`
+                },
+                body: JSON.stringify(formData)
+            });
+            const data = await response.json();
+            setLoading(false);
+            console.log("Register Success: ", data);
+            navigate('/login');
+        }   
+        catch (error) {
+            setLoading(false);
+            console.log("Register error: ", error.message);
+        }
+    }
+
+    return(
+        <>
+            <div className="center-form">
+                {loading && <Spinner />}
+                <h1>Register Form</h1>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group controlId="formBasicUsername">
+                        <Form.Control
+                            type="text"
+                            name="username"
+                            placeholder="Enter username"
+                            value={formData.username}
+                            onChange={handleInputChange}
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="formBasicEmail">
+                        <Form.Control
+                            type="email"
+                            name="email"
+                            placeholder="Enter email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="formBasicName">
+                        <Form.Control
+                            type="text"
+                            name="name"
+                            placeholder="Enter name"
+                            value={formData.name}
+                            onChange={handleInputChange}
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="formBasicPassword">
+                        <Form.Control
+                            type="text"
+                            name="password"
+                            placeholder="Enter password"
+                            value={formData.password}
+                            onChange={handleInputChange}
+                        />
+                    </Form.Group>
+                    <Button variant="primary" type="submit" className="w-100">
+                        Register
+                    </Button>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                        <Link style={{ color: "black" }} to="/login">Click Here to Login</Link>
+                    </div>
+                </Form>
+            </div>
+        </>
+    )
+
+};
+
+export default Register;
