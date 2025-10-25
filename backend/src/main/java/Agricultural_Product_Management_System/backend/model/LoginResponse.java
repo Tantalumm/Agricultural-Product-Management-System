@@ -1,4 +1,4 @@
-package Agricultural_Product_Management_System.backend.dto;
+package Agricultural_Product_Management_System.backend.model;
 
 public record LoginResponse(
         Boolean success,
