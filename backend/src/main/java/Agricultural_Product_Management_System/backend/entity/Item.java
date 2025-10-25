@@ -16,6 +16,7 @@ public class Item {
     private String description;
     private Double price;
     private Integer  quantity;
+    private String imageUrl;
     private Instant createdAt;
     private Instant updatedAt;
 

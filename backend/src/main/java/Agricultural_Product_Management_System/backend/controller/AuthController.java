@@ -1,9 +1,9 @@
 package Agricultural_Product_Management_System.backend.controller;
 
-import Agricultural_Product_Management_System.backend.dto.LoginRequest;
-import Agricultural_Product_Management_System.backend.dto.LoginResponse;
-import Agricultural_Product_Management_System.backend.dto.RegisterRequest;
-import Agricultural_Product_Management_System.backend.dto.RegisterResponse;
+import Agricultural_Product_Management_System.backend.model.LoginRequest;
+import Agricultural_Product_Management_System.backend.model.LoginResponse;
+import Agricultural_Product_Management_System.backend.model.RegisterRequest;
+import Agricultural_Product_Management_System.backend.model.RegisterResponse;
 import Agricultural_Product_Management_System.backend.entity.User;
 import Agricultural_Product_Management_System.backend.service.AuthService;
 import jakarta.validation.Valid;
