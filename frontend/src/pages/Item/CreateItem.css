@@ -21,3 +21,10 @@
     margin-bottom: 15px;
     padding: 10px;
 }
+
+.group-form {
+  text-align: left;
+  justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+}
