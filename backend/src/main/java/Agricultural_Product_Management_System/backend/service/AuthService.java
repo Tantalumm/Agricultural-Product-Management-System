@@ -1,8 +1,8 @@
 package Agricultural_Product_Management_System.backend.service;
 
-import Agricultural_Product_Management_System.backend.dto.LoginRequest;
-import Agricultural_Product_Management_System.backend.dto.LoginResponse;
-import Agricultural_Product_Management_System.backend.dto.RegisterRequest;
+import Agricultural_Product_Management_System.backend.model.LoginRequest;
+import Agricultural_Product_Management_System.backend.model.LoginResponse;
+import Agricultural_Product_Management_System.backend.model.RegisterRequest;
 import Agricultural_Product_Management_System.backend.entity.User;
 import Agricultural_Product_Management_System.backend.repository.UserRepository;
 import jakarta.transaction.Transactional;
