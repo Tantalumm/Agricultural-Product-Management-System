@@ -1,9 +1,13 @@
 package Agricultural_Product_Management_System.backend.controller;
 
+import Agricultural_Product_Management_System.backend.entity.Item;
 import Agricultural_Product_Management_System.backend.model.ItemRequest;
 import Agricultural_Product_Management_System.backend.service.S3Service;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import Agricultural_Product_Management_System.backend.service.ItemService;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,5 +37,18 @@ public class ItemController {
             ex.printStackTrace();
             return "Error while uploading file: " + ex.getMessage();
         }
+    }
+
+    @GetMapping("/search")
+    public Page<Item> SearchItem(@RequestParam(required = false) String name,
+                                 @RequestParam(defaultValue = "0") int page,
+                                 @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return itemService.searchItem(name, pageable);
+    }
+
+    @GetMapping("/read")
+    public Item ReadItem(@RequestParam Long id) {
+        return itemService.readItem(id);
     }
 }
