@@ -20,15 +20,14 @@ public class SecurityConfig {
                     corsConfig.setAllowedOrigins(List.of("http://localhost:3000")); // อนุญาตให้โดเมนนี้เข้าถึง
                     corsConfig.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     corsConfig.setAllowedHeaders(List.of("Authorization", "Content-Type"));
-                    corsConfig.setAllowCredentials(true);  // หากต้องการให้ส่ง cookie หรือ credentials
+                    corsConfig.setAllowCredentials(true); // หากต้องการให้ส่ง cookie หรือ credentials
                     return corsConfig;
                 }))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/register", "/auth/login", "/item/create", "/item/search",
                                 "item/read").permitAll() // เปิดทางให้สมัคร
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // กันเคส CORS preflight
-                        .anyRequest().authenticated()
-                );
+                        .anyRequest().authenticated());
         return http.build();
     }
 
@@ -37,4 +36,3 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
-
