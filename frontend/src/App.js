@@ -6,6 +6,7 @@ import Login from './pages/User/Login.js';
 import Register from './pages/User/Register.js';
 import Homepage from './pages/HomePage/HomePage.js';
 import ItemList from './pages/Item/ItemList.js';
+import ItemCate from './pages/Item/ItemCate.js';
 function App() {
   return (
     <>
@@ -14,6 +15,7 @@ function App() {
         <Route path='/' element={<ProtectedRoutes><Homepage/></ProtectedRoutes>} />
         <Route path='/CreateItem' element={<ProtectedRoutes><CreateItem/></ProtectedRoutes>} />
         <Route path='/ItemList' element={<ProtectedRoutes><ItemList/></ProtectedRoutes>} />
+        <Route path='/ItemCate' element={<ProtectedRoutes><ItemCate/></ProtectedRoutes>} />
         <Route path='/Login' element={<Login/>} />
         <Route path='/Register' element={<Register/>} />
        </Routes>
