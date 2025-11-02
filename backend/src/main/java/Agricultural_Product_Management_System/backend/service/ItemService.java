@@ -29,8 +29,7 @@ public class ItemService {
     }
 
     public Page<Item> searchItem(String name, Pageable pageable) {
-        if(name == null || name.isEmpty())
-        {
+        if (name == null || name.isEmpty()) {
             return itemRepository.findAll(pageable);
         }
         return itemRepository.findAllByNameContainingIgnoreCase(name.trim(), pageable);
@@ -38,5 +37,23 @@ public class ItemService {
 
     public Item readItem(Long id) {
         return itemRepository.findById(id).orElse(null);
+    }
+
+    public Item updateItem(Long id, ItemRequest request) {
+        Item existingItem = itemRepository.findById(id).orElseThrow(() -> new RuntimeException("Item not found"));
+
+        existingItem.setName(request.name());
+        existingItem.setDescription(request.description());
+        existingItem.setPrice(request.price());
+        existingItem.setQuantity(request.quantity());
+        existingItem.setImageUrl(request.imageUrl());
+
+        return itemRepository.save(existingItem);
+    }
+
+    public void deleteItem(Long id) {
+        Item existingItem = itemRepository.findById(id).orElseThrow(() -> new RuntimeException("Item not found"));
+
+        itemRepository.delete(existingItem);
     }
 }

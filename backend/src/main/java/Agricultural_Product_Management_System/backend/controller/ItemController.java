@@ -51,4 +51,26 @@ public class ItemController {
     public Item ReadItem(@RequestParam Long id) {
         return itemService.readItem(id);
     }
+
+    @PutMapping("/update/{id}")
+    public String UpdateItem(@PathVariable Long id,
+                           @ModelAttribute ItemRequest request,
+                           @RequestParam("file") MultipartFile file) {
+        try{
+            String imageUrl = s3Service.uploadFile(file);
+
+            itemService.updateItem(id, new ItemRequest(request.name(), request.description(), request.price(), request.quantity(), imageUrl));
+            return "Item Update Successfully";
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+            return "Item Update Failed" + ex.getMessage();
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String DeleteItem(@PathVariable Long id) {
+        itemService.deleteItem(id);
+        return "Item deleted successfully";
+    }
 }
