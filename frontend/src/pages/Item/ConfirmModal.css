@@ -1,0 +1,123 @@
+/* พื้นหลัง overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* กล่อง popup */
+.modal-box {
+  background: #fff;
+  padding: 20px 28px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  width: 340px;
+  text-align: center;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+/* title */
+.modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* รายละเอียด */
+.modal-detail {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* ปุ่ม */
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btn-cancel {
+  padding: 8px 16px;
+  background-color: #e5e7eb;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-confirm {
+  padding: 8px 16px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ปุ่ม hover effect */
+.btn-cancel:hover {
+  background-color: #d1d5db;
+}
+
+.btn-confirm:hover {
+  background-color: #dc2626;
+}
+
+/* animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ปุ่มในตาราง */
+.btn-delete {
+  color: #ef4444;
+  border: 1px solid #ef4444;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  background-color: #fee2e2;
+}
+
+.btn-edit,
+.btn-view {
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background-color: white;
+  cursor: pointer;
+}
+
+.btn-edit:hover,
+.btn-view:hover {
+  background-color: #f3f4f6;
+}
+
+/* ตาราง */
+.item-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.item-table th,
+.item-table td {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 10px 14px;
+  text-align: left;
+}
