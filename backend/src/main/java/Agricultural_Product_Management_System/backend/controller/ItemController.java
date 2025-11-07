@@ -47,8 +47,8 @@ public class ItemController {
         return itemService.searchItem(name, pageable);
     }
 
-    @GetMapping("/read")
-    public Item ReadItem(@RequestParam Long id) {
+    @GetMapping("/read/{id}")
+    public Item ReadItem(@PathVariable Long id) {
         return itemService.readItem(id);
     }
 
