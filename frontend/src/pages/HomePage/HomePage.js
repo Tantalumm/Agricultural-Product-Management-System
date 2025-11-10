@@ -1,7 +1,9 @@
+import ItemList from "../Item/ItemList";
+
 const Homepage = () => {
     return (
         <>
-        <h1>Welcome to Agricultural Product Management System</h1>
+        <ItemList/>
         </>
     )
 };

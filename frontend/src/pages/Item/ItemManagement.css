@@ -1,0 +1,212 @@
+:root {
+    --bg: #f7f9fc;
+    --panel: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --line: #e5e7eb;
+    --primary: #5b8def;
+    --primary-weak: #e9efff;
+    --danger: #ef4444;
+    --shadow: 0 8px 24px rgba(15, 23, 42, .06);
+    --radius: 14px;
+    --radius-sm: 10px;
+}
+
+* {
+    box-sizing: border-box
+}
+
+html,
+body,
+#root {
+    height: 100%
+}
+
+body {
+    margin: 0;
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Inter, "Noto Sans Thai", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+button {
+    font: inherit
+}
+
+.oc-container {
+    min-height: 100%;
+    background: var(--bg);
+    padding: 20px;
+    color: var(--text);
+}
+
+.oc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 8px auto 14px;
+    max-width: 1100px;
+}
+
+.oc-title {
+    font-weight: 600;
+    font-size: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: center
+}
+
+.oc-badge {
+    background: #d1fae5;
+    color: #065f46;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 12px
+}
+
+.oc-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center
+}
+
+.oc-add {
+    background: var(--primary);
+    color: #fff;
+    border: 0;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+}
+
+.oc-add:hover {
+    filter: brightness(.98)
+}
+
+.oc-tablewrap {
+    background: var(--panel);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow: hidden;
+    border: 1px solid var(--line);
+}
+
+.oc-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0
+}
+
+.oc-table thead th {
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--muted);
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    background: #fafbff;
+    vertical-align: middle;
+}
+
+.oc-table tbody td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+    color: var(--text);
+}
+
+.oc-table tbody tr:hover {
+    background: #fafafa
+}
+
+.oc-right {
+    text-align: center
+}
+
+.oc-right-right {
+    text-align: center;
+}
+
+.oc-ghost {
+    background: transparent;
+    border: 1px solid var(--line);
+    padding: 6px 10px;
+    border-radius: 8px;
+    margin-right: 6px;
+    cursor: pointer
+}
+
+.oc-danger {
+    background: transparent;
+    border: 1px solid #fecaca;
+    color: var(--danger);
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer
+}
+
+.oc-empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 40px 0
+}
+
+.oc-footer {
+    max-width: 1100px;
+    margin: 10px auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--muted);
+    font-size: 13px;
+    padding: 6px 2px;
+}
+
+.oc-pagesize {
+    border: 1px solid var(--line);
+    background: var(--panel);
+    padding: 8px 10px;
+    border-radius: 10px
+}
+
+.oc-pagination {
+    display: flex;
+    align-items: center;
+    gap: 8px
+}
+
+.oc-pagination button {
+    border: 1px solid var(--line);
+    background: var(--panel);
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer
+}
+
+.oc-pagination button:disabled {
+    opacity: .4;
+    cursor: not-allowed
+}
+
+.oc-pageinfo {
+    margin-left: 4px
+}
+
+.oc-dots {
+    display: flex;
+    gap: 6px;
+    margin: 0 6px
+}
+
+.oc-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: #e5e7eb;
+    display: inline-block
+}
+
+.oc-dots span.active {
+    background: var(--primary)
+}

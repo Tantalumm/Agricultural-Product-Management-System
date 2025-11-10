@@ -21,6 +21,8 @@ const CreateItem = () => {
     }
     );
 
+    const [file, setFile] = useState(null);
+
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setFormData({
@@ -28,6 +30,11 @@ const CreateItem = () => {
             [name]: value,
         });
     }
+
+    const handleFileChange = (event) => {
+        setFile(event.target.files[0]);
+    }
+
 
     const navigate = useNavigate();
 
@@ -38,18 +45,26 @@ const CreateItem = () => {
         console.log(USERNAME);
         console.log(PASSWORD);
 
+        const data = new FormData();
+        data.append("name", formData.name);
+        data.append("description", formData.description);
+        data.append("price", formData.price);
+        data.append("quantity", formData.quantity);
+
+        if (file) {
+            data.append("file", file);
+        }
+
         try {
-            const response = await fetch('http://localhost:8080/api/item', {
+            const response = await fetch('http://localhost:8080/item/create', {
                 method: 'POST',
                headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': `Basic ${encodedCredentials}`
                 },
-                body: JSON.stringify(formData)
-
+                body: data
             });
-            const data = await response.json();
-            console.log("Item Created Success: ", data);
+            const result = await response.text();
+            console.log("Item Created Success: ", result);
             navigate('/');
         }
         catch (error) {
@@ -62,7 +77,8 @@ const CreateItem = () => {
             <div className="center-form">
                 <h1>Create New Item</h1>
                 <Form onSubmit={handleSubmit}>
-                    <Form.Group controlId="FormBasicName">
+                    <Form.Group controlId="FormBasicName" className="group-form">
+                        <Form.Label>Name</Form.Label>
                         <Form.Control
                             type="text"
                             name="name"
@@ -71,7 +87,8 @@ const CreateItem = () => {
                             onChange={handleInputChange}
                         />
                     </Form.Group>
-                    <Form.Group controlId="FormBasicName">
+                    <Form.Group controlId="FormBasicDescription" className="group-form">
+                        <Form.Label>Description</Form.Label>
                         <Form.Control
                             type="text"
                             name="description"
@@ -80,7 +97,8 @@ const CreateItem = () => {
                             onChange={handleInputChange}
                         />
                     </Form.Group>
-                    <Form.Group controlId="FormBasicName">
+                    <Form.Group controlId="FormBasicPrice" className="group-form">
+                        <Form.Label>Price</Form.Label>
                         <Form.Control
                             type="text"
                             name="price"
@@ -89,13 +107,22 @@ const CreateItem = () => {
                             onChange={handleInputChange}
                         />
                     </Form.Group>
-                    <Form.Group controlId="FormBasicName">
+                    <Form.Group controlId="FormBasicQuantity" className="group-form">
+                        <Form.Label>Quantity</Form.Label>
                         <Form.Control
                             type="text"
                             name="quantity"
                             placeholder="Enter Item Quantity"
                             value={formData.quantity}
                             onChange={handleInputChange}
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="FormBasicFile" className="group-form">
+                        <Form.Label>Image</Form.Label>
+                        <Form.Control
+                            type="file"
+                            name="file"
+                            onChange={handleFileChange}
                         />
                     </Form.Group>
                     <Button variant="primary" type="submit" className="w-100">
