@@ -1,24 +1,23 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import Spinner from "../../components/Spinner"
 import "./ItemList.css";
+import "../../index.css"
 
 const ItemList = () => {
 
     const [items, setItems] = useState([]);
-    const [page, setPage] = useState(0);
-    const [totalPages, setTotalPages] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [keyword, setKeyword] = useState("");
-    const [error, setError] = useState(null);
 
     const fetchItems = async () => {
-        setLoading(true);
         try {
+            setLoading(true);
             const response = await fetch("http://localhost:8080/item/search?page=0&size=10");
             const data = await response.json();
             setItems(data.content);
-        } catch (err) {
-            setError("Error fetching data");
+        } catch (error) {
+            alert("Error: " + error.message);
+            console.log("Error: ", error.message);
+
         } finally {
             setLoading(false);
         }
@@ -27,8 +26,7 @@ const ItemList = () => {
         fetchItems();
     }, []);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p style={{ color: "red" }}>{error}</p>;
+    if (loading) return <div className="loading-page"><Spinner/></div>;
 
     return (
         <div>

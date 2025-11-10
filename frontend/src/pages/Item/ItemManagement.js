@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
-import "./ItemManagement.css";
 import { useNavigate } from "react-router-dom";
 import ConfirmModal from "./ConfirmModal";
+import Spinner from "../../components/Spinner";
+import "./ItemManagement.css";
+import "../../index.css"
 
 
 const ItemCate = () => {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
     const [open, setOpen] = useState(false);
     const [target, setTarget] = useState(null);
     const Navigate = useNavigate();
@@ -15,11 +16,15 @@ const ItemCate = () => {
     const fetchItems = async () => {
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:8080/item/search?page=0&size=10");
+            const response = await fetch("http://localhost:8080/item/search?page=0&size=10",
+                {
+                    method: 'GET',
+                });
             const data = await response.json();
             setItems(data.content);
-        } catch (err) {
-            setError("Error fetching data");
+        } catch (error) {
+            alert("Error: " + error.message);
+            console.log("Error: ", error.message);
         } finally {
             setLoading(false);
         }
@@ -42,8 +47,11 @@ const ItemCate = () => {
             });
 
             if (!response.ok) {
-                setItems((prev) => prev.filter((item) => item.id !== target.id));
+                
                 alert("Item deleted failed");
+            }
+            if (response.ok) {
+                setItems((prev) => prev.filter((item) => item.id !== target.id));
             }
         }
         catch (error) {
@@ -55,6 +63,7 @@ const ItemCate = () => {
         }
     };
 
+    if (loading) return <div className="loading-page"><Spinner/></div>;
 
     return (
         <div className="oc-container">

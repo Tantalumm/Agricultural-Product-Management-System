@@ -8,11 +8,6 @@ import Spinner from "../../components/Spinner";
 
 const Login = () => {
 
-    const USERNAME = process.env.REACT_APP_USERNAME;
-    const PASSWORD = process.env.REACT_APP_PASSWORD;
-
-    const encodedCredentials = btoa(`${USERNAME}:${PASSWORD}`);
-
     const [formData, setFormData] = useState({
         username: "",
         password: ""
@@ -31,10 +26,6 @@ const Login = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(formData);
-        console.log(encodedCredentials);
-        console.log(USERNAME);
-        console.log(PASSWORD);
 
         try {
             setLoading(true);
@@ -42,7 +33,6 @@ const Login = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Basic ${encodedCredentials}`
                 },
                 body: JSON.stringify(formData)
             });
@@ -59,13 +49,17 @@ const Login = () => {
             setLoading(false);
             console.log("Login error: ", error.message);
         }
+        finally{
+            setLoading(false);
+        }
     }
 
+    if (loading) return <div className="loading-page"><Spinner/></div>;
     return (
         <>
             <div className="center-form">
                 {loading && <Spinner />}
-                <h1>Login Form</h1>
+                <h1>Login</h1>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formBasicUsername">
                         <Form.Control

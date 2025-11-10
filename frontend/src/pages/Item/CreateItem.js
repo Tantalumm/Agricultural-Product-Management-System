@@ -1,17 +1,12 @@
-import "./CreateItem.css"
+import Spinner from "../../components/Spinner";
 import { useState } from "react";
 import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
-
+import "./CreateItem.css"
+import "../../index.css"
 
 const CreateItem = () => {
-
-    const USERNAME = process.env.REACT_APP_USERNAME;
-    const PASSWORD = process.env.REACT_APP_PASSWORD;
-
-    const encodedCredentials = btoa(`${USERNAME}:${PASSWORD}`);
-
 
     const [formData, setFormData] = useState({
         name: "",
@@ -22,6 +17,7 @@ const CreateItem = () => {
     );
 
     const [file, setFile] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -40,10 +36,6 @@ const CreateItem = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(formData);
-        console.log(encodedCredentials);
-        console.log(USERNAME);
-        console.log(PASSWORD);
 
         const data = new FormData();
         data.append("name", formData.name);
@@ -56,11 +48,9 @@ const CreateItem = () => {
         }
 
         try {
+            setLoading(true);
             const response = await fetch('http://localhost:8080/item/create', {
                 method: 'POST',
-               headers: {
-                    'Authorization': `Basic ${encodedCredentials}`
-                },
                 body: data
             });
             const result = await response.text();
@@ -68,10 +58,15 @@ const CreateItem = () => {
             navigate('/');
         }
         catch (error) {
+            alert("Error: " + error.message);
             console.log("error: ", error.message);
+        }
+        finally{
+            setLoading(false);
         }
     }
 
+    if (loading) return <div className="loading-page"><Spinner/></div>;
     return (
         <>
             <div className="center-form">
