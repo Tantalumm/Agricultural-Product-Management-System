@@ -7,11 +7,6 @@ import Spinner from "../../components/Spinner";
 
 const Register = () => {
 
-    const USERNAME = process.env.REACT_APP_USERNAME;
-    const PASSWORD = process.env.REACT_APP_PASSWORD;
-
-    const encodedCredentials = btoa(`${USERNAME}:${PASSWORD}`);
-
     const [formData, setFormData] = useState({
         username: "",
         email : "",
@@ -33,17 +28,13 @@ const Register = () => {
     
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(formData);
-        console.log(encodedCredentials);
-        console.log(USERNAME);
-        console.log(PASSWORD);
+
         try {
             setLoading(true);
             const response = await fetch('http://localhost:8080/auth/register', {   
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Basic ${encodedCredentials}`
                 },
                 body: JSON.stringify(formData)
             });
@@ -56,13 +47,17 @@ const Register = () => {
             setLoading(false);
             console.log("Register error: ", error.message);
         }
+        finally{
+            setLoading(false);
+        }
     }
 
+    if (loading) return <div className="loading-page"><Spinner/></div>;
     return(
         <>
             <div className="center-form">
                 {loading && <Spinner />}
-                <h1>Register Form</h1>
+                <h1>Register</h1>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formBasicUsername">
                         <Form.Control

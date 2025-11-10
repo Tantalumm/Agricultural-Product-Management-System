@@ -3,15 +3,12 @@ import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import Spinner from "../../components/Spinner";
 import "./UpdateItem.css";
+import "../../index.css"
 
 
 const UpdateItem = () => {
-
-    const USERNAME = process.env.REACT_APP_USERNAME;
-    const PASSWORD = process.env.REACT_APP_PASSWORD;
-
-    const encodedCredentials = btoa(`${USERNAME}:${PASSWORD}`);
 
     const { id } = useParams();
 
@@ -24,6 +21,7 @@ const UpdateItem = () => {
     );
 
     const [file, setFile] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -45,10 +43,6 @@ const UpdateItem = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(formData);
-        console.log(encodedCredentials);
-        console.log(USERNAME);
-        console.log(PASSWORD);
 
         const data = new FormData();
         data.append("name", formData.name);
@@ -61,11 +55,9 @@ const UpdateItem = () => {
         }
 
         try {
+            setLoading(true);
             const response = await fetch(`http://localhost:8080/item/update/${id}`, {
                 method: 'PUT',
-                headers: {
-                    'Authorization': `Basic ${encodedCredentials}`
-                },
                 body: data
             });
             const result = await response.text();
@@ -73,11 +65,17 @@ const UpdateItem = () => {
             navigate('/');
         }
         catch (error) {
+            alert("Error: " + error.message);
             console.error('Error updating item:', error);
+        }
+        finally {
+            setLoading(false);
         }
     };
 
-    return <>
+    if (loading) return <div className="loading-page"><Spinner/></div>;
+
+    return <div>
         <div className="center-form">
             <h1>Update Item Id : {id} </h1>
             <Form onSubmit={handleSubmit}>
@@ -134,7 +132,7 @@ const UpdateItem = () => {
                 </Button>
             </Form>
         </div>
-    </>
+    </div>
 };
 
 export default UpdateItem;

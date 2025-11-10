@@ -1,11 +1,13 @@
-import "./ReadItem.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Spinner from "../../components/Spinner";
+import "./ReadItem.css";
+import "../../index.css"
 
 const ReadItem = () => {
 
     const [loading, setLoading] = useState(false);
-    const [item, setItem] = useState(null);
+    const [item, setItem] = useState([]);
 
     const { id } = useParams();
 
@@ -20,8 +22,10 @@ const ReadItem = () => {
                 );
                 const data = await response.json();
                 setItem(data);
+                console.log(item);
             }
-            catch (err) {
+            catch (error) {
+                alert("Error: " + error.message);
                 console.log("Error fetching data");
             }
             finally {
@@ -33,14 +37,14 @@ const ReadItem = () => {
         console.log(id);
     }, [id]);
 
-    if (loading || !item) return <div>Loading...</div>;
+    if (loading) return <div className="loading-page"><Spinner/></div>;
 
     return (
         <div className="pd-wrap">
             <div className="pd-card">
 
                 <div className="pd-image">
-                    <img src={item.picture} alt={item.name} />
+                    <img src={`${item.imageUrl}`} alt={item.name} />
                 </div>
 
                 <div className="pd-info">
