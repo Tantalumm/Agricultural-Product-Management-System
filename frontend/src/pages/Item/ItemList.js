@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Spinner from "../../components/Spinner"
+import { Link } from "react-router-dom";
 import "./ItemList.css";
 import "../../index.css"
 
@@ -26,7 +27,7 @@ const ItemList = () => {
         fetchItems();
     }, []);
 
-    if (loading) return <div className="loading-page"><Spinner/></div>;
+    if (loading) return <div className="loading-page"><Spinner /></div>;
 
     return (
         <div>
@@ -39,9 +40,12 @@ const ItemList = () => {
                             <p>ราคา : {item.price} THB</p>
                             <p>จำนวน : {item.quantity}</p>
                             <p>{item.description}</p>
-                            <button className="item-button">Buy Now</button>
+                            <Link to={`/ReadItem/${item.id}`} className="item-card-link">
+                                <button className="item-button" >View</button>
+                            </Link>
                         </div>
                     </div>
+
                 ))}
             </div>
         </div>

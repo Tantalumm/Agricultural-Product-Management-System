@@ -44,7 +44,7 @@ const ReadItem = () => {
             <div className="pd-card">
 
                 <div className="pd-image">
-                    <img src={item.imageUrl} alt={item.name} />
+                    <img src={`${item.imageUrl}`} alt={item.name} />
                 </div>
 
                 <div className="pd-info">
