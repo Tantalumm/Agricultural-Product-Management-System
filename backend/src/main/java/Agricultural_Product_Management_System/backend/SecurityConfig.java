@@ -25,7 +25,9 @@ public class SecurityConfig {
                 }))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/register", "/auth/login", "/item/create", "/item/search",
-                                "/item/read/{id}", "/item/update/{id}", "/item/delete/{id}").permitAll() // เปิดทางให้สมัคร
+                                "/item/search/**",
+                                "/item/read/{id}", "/item/update/{id}", "/item/delete/{id}")
+                        .permitAll() // เปิดทางให้สมัคร
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // กันเคส CORS preflight
                         .anyRequest().authenticated());
         return http.build();
