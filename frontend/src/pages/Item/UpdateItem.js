@@ -1,15 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Spinner from "../../components/Spinner";
 import "./UpdateItem.css";
-import "../../index.css"
-
+import "../../index.css";
 
 const UpdateItem = () => {
-
     const { id } = useParams();
 
     const [formData, setFormData] = useState({
@@ -17,11 +14,11 @@ const UpdateItem = () => {
         description: "",
         price: "",
         quantity: ""
-    }
-    );
+    });
 
     const [file, setFile] = useState(null);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -29,17 +26,11 @@ const UpdateItem = () => {
             ...formData,
             [name]: value,
         });
-    }
+    };
 
     const handleFileChange = (event) => {
         setFile(event.target.files[0]);
-    }
-
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        console.log(id);
-    }, [id]);
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -57,28 +48,37 @@ const UpdateItem = () => {
         try {
             setLoading(true);
             const response = await fetch(`http://localhost:8080/item/update/${id}`, {
-                method: 'PUT',
+                method: "PUT",
                 body: data
             });
             const result = await response.text();
-            console.log('Item Update Success: ', result);
-            navigate('/');
-        }
-        catch (error) {
+            console.log("Item Update Success: ", result);
+            navigate("/ItemManagement");
+        } catch (error) {
             alert("Error: " + error.message);
-            console.error('Error updating item:', error);
-        }
-        finally {
+            console.error("Error updating item:", error);
+        } finally {
             setLoading(false);
         }
     };
 
-    if (loading) return <div className="loading-page"><Spinner/></div>;
+    if (loading) return <div className="loading-page"><Spinner /></div>;
 
-    return <div>
-        <div className="center-form">
-            <h1>Update Item Id : {id} </h1>
-            <Form onSubmit={handleSubmit}>
+    return (
+        <main className="update-item-page">
+            <div className="update-item-copy">
+                <span>Edit Product</span>
+                <h1>Update Item</h1>
+                <p>แก้ไขข้อมูลสินค้า #{id} แล้วบันทึกกลับเข้าระบบจัดการสินค้า</p>
+                <Link to="/ItemManagement" className="update-back-link">Back to Management</Link>
+            </div>
+
+            <Form onSubmit={handleSubmit} className="update-item-form">
+                <div className="update-form-heading">
+                    <span>Item ID</span>
+                    <strong>#{id}</strong>
+                </div>
+
                 <Form.Group controlId="FormBasicName" className="group-form">
                     <Form.Label>Name</Form.Label>
                     <Form.Control
@@ -92,7 +92,8 @@ const UpdateItem = () => {
                 <Form.Group controlId="FormBasicDescription" className="group-form">
                     <Form.Label>Description</Form.Label>
                     <Form.Control
-                        type="text"
+                        as="textarea"
+                        rows={3}
                         name="description"
                         placeholder="Enter Item Description"
                         value={formData.description}
@@ -128,11 +129,11 @@ const UpdateItem = () => {
                     />
                 </Form.Group>
                 <Button variant="primary" type="submit" className="w-100">
-                    Submit
+                    Update Item
                 </Button>
             </Form>
-        </div>
-    </div>
+        </main>
+    );
 };
 
 export default UpdateItem;

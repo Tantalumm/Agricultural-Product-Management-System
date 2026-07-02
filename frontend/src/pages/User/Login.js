@@ -57,9 +57,13 @@ const Login = () => {
     if (loading) return <div className="loading-page"><Spinner/></div>;
     return (
         <>
-            <div className="center-form">
+            <div className="auth-page">
                 {loading && <Spinner />}
-                <h1>Login</h1>
+                <div className="auth-copy">
+                    <span>Welcome back</span>
+                    <h1>Login</h1>
+                    <p>เข้าสู่ระบบเพื่อจัดการสินค้าเกษตรและตรวจสอบรายการล่าสุด</p>
+                </div>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formBasicUsername">
                         <Form.Control
@@ -72,7 +76,7 @@ const Login = () => {
                     </Form.Group>
                     <Form.Group controlId="formBasicPassword">
                         <Form.Control
-                            type="text"
+                            type="password"
                             name="password"
                             placeholder="Enter password"
                             value={formData.password}
@@ -82,8 +86,8 @@ const Login = () => {
                     <Button variant="primary" type="submit" className="w-100">
                         Login
                     </Button>
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                        <Link style={{ color: "black" }} to="/register">Click Here to Register</Link>
+                    <div className="auth-link-row">
+                        <Link to="/register">Create a new account</Link>
                     </div>
                 </Form>
             </div>

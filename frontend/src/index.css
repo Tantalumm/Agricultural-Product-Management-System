@@ -5,6 +5,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #070b09;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 code {
@@ -16,5 +21,6 @@ code {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 750px;
+    min-height: calc(100vh - 66px);
+    background: #070b09;
   }

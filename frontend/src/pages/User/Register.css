@@ -1,23 +1,15 @@
-.center-form{
-    display: flex;
-    flex-direction:column;
-    align-items: center;
-    justify-content: center;
-    height: 90vh;
+.register-page Form {
+    width: min(100%, 470px);
 }
 
-.center-form Form{
-    max-width: 400px;
-    width: 100%;
-    padding: 20px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.center-form Form .form-control{
-    margin-bottom: 15px;
-    padding: 10px;
+.register-page {
+    min-height: calc(100vh - 66px);
+    display: grid;
+    place-items: center;
+    padding: 150px 18px;
+    color: #f8faf8;
+    background:
+        radial-gradient(circle at 20% 10%, rgba(52, 211, 153, 0.18), transparent 24rem),
+        radial-gradient(circle at 82% 70%, rgba(245, 158, 11, 0.12), transparent 22rem),
+        #070b09;
 }

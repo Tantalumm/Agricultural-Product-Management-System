@@ -69,8 +69,12 @@ const CreateItem = () => {
     if (loading) return <div className="loading-page"><Spinner/></div>;
     return (
         <>
-            <div className="center-form">
-                <h1>Create New Item</h1>
+            <div className="create-item-page">
+                <div className="create-item-copy">
+                    <span>Inventory Builder</span>
+                    <h1>Create Item</h1>
+                    <p>เพิ่มรายละเอียดสินค้า ราคา จำนวน และรูปภาพให้พร้อมแสดงบนหน้าหลัก</p>
+                </div>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="FormBasicName" className="group-form">
                         <Form.Label>Name</Form.Label>
@@ -121,7 +125,7 @@ const CreateItem = () => {
                         />
                     </Form.Group>
                     <Button variant="primary" type="submit" className="w-100">
-                        Submit
+                        Create Item
                     </Button>
                 </Form>
             </div>

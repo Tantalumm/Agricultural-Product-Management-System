@@ -55,13 +55,17 @@ const Register = () => {
     if (loading) return <div className="loading-page"><Spinner/></div>;
     return(
         <>
-            <div className="center-form">
+            <div className="auth-page register-page">
                 {loading && <Spinner />}
-                <h1>Register</h1>
+                <div className="auth-copy">
+                    <span>Start managing</span>
+                    <h1>Register</h1>
+                    <p>สร้างบัญชีสำหรับเพิ่มสินค้าและติดตามข้อมูลคลังสินค้า</p>
+                </div>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formBasicUsername">
                         <Form.Control
-                            type="text"
+                            type="password"
                             name="username"
                             placeholder="Enter username"
                             value={formData.username}
@@ -98,8 +102,8 @@ const Register = () => {
                     <Button variant="primary" type="submit" className="w-100">
                         Register
                     </Button>
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                        <Link style={{ color: "black" }} to="/login">Click Here to Login</Link>
+                    <div className="auth-link-row">
+                        <Link to="/login">Already have an account?</Link>
                     </div>
                 </Form>
             </div>

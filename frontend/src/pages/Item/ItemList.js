@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import Spinner from "../../components/Spinner"
+import Spinner from "../../components/Spinner";
 import { Link } from "react-router-dom";
 import "./ItemList.css";
-import "../../index.css"
+import "../../index.css";
 
 const ItemList = () => {
-
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -18,11 +17,11 @@ const ItemList = () => {
         } catch (error) {
             alert("Error: " + error.message);
             console.log("Error: ", error.message);
-
         } finally {
             setLoading(false);
         }
     };
+
     useEffect(() => {
         fetchItems();
     }, []);
@@ -30,7 +29,7 @@ const ItemList = () => {
     if (loading) return <div className="loading-page"><Spinner /></div>;
 
     return (
-        <div>
+        <div className="item-list-shell">
             <div className="grid-container">
                 {items.map((item) => (
                     <div className="item-card" key={item.id}>
@@ -41,15 +40,14 @@ const ItemList = () => {
                             <p>จำนวน : {item.quantity}</p>
                             <p>{item.description}</p>
                             <Link to={`/ReadItem/${item.id}`} className="item-card-link">
-                                <button className="item-button" >View</button>
+                                <button className="item-button">View</button>
                             </Link>
                         </div>
                     </div>
-
                 ))}
             </div>
         </div>
     );
 };
 
-export default ItemList
+export default ItemList;
