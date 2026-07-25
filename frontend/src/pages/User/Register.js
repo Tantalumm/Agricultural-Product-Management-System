@@ -65,7 +65,7 @@ const Register = () => {
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formBasicUsername">
                         <Form.Control
-                            type="password"
+                            type="text"
                             name="username"
                             placeholder="Enter username"
                             value={formData.username}
@@ -92,7 +92,7 @@ const Register = () => {
                     </Form.Group>
                     <Form.Group controlId="formBasicPassword">
                         <Form.Control
-                            type="text"
+                            type="password"
                             name="password"
                             placeholder="Enter password"
                             value={formData.password}
