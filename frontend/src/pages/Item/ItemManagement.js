@@ -4,24 +4,28 @@ import ConfirmModal from "./ConfirmModal";
 import Spinner from "../../components/Spinner";
 import "./ItemManagement.css";
 import "../../index.css";
+import { throwApiError } from "../../utils/apiError";
 
 const ItemCate = () => {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     const [open, setOpen] = useState(false);
     const [target, setTarget] = useState(null);
     const Navigate = useNavigate();
 
     const fetchItems = async () => {
         setLoading(true);
+        setErrorMessage("");
         try {
             const response = await fetch("http://localhost:8080/item/search?page=0&size=10", {
                 method: "GET",
             });
+            await throwApiError(response, "Cannot load item management data");
             const data = await response.json();
-            setItems(data.content);
+            setItems(data.content || []);
         } catch (error) {
-            alert("Error: " + error.message);
+            setErrorMessage(error.message || "Cannot load item management data");
             console.log("Error: ", error.message);
         } finally {
             setLoading(false);
@@ -38,19 +42,16 @@ const ItemCate = () => {
     };
 
     const doDelete = async () => {
+        setErrorMessage("");
         try {
             const response = await fetch(`http://localhost:8080/item/delete/${target.id}`, {
                 method: "DELETE",
             });
 
-            if (!response.ok) {
-                alert("Item deleted failed");
-            }
-            if (response.ok) {
-                setItems((prev) => prev.filter((item) => item.id !== target.id));
-            }
+            await throwApiError(response, "Item delete failed");
+            setItems((prev) => prev.filter((item) => item.id !== target.id));
         } catch (error) {
-            alert("Error: " + error.message);
+            setErrorMessage(error.message || "Item delete failed");
         } finally {
             setOpen(false);
             setTarget(null);
@@ -73,6 +74,7 @@ const ItemCate = () => {
             </div>
 
             <div className="oc-tablewrap">
+                {errorMessage && <div className="page-error oc-error" role="alert">{errorMessage}</div>}
                 <table className="oc-table" role="table">
                     <thead>
                         <tr>

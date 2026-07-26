@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import { useNavigate, Link } from "react-router-dom";
 import { Form } from "react-bootstrap"; 
 import Spinner from "../../components/Spinner";
+import { throwApiError } from "../../utils/apiError";
 
 const Register = () => {
 
@@ -24,10 +25,12 @@ const Register = () => {
     }
 
     const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
     
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setErrorMessage("");
 
         try {
             setLoading(true);
@@ -38,13 +41,13 @@ const Register = () => {
                 },
                 body: JSON.stringify(formData)
             });
+            await throwApiError(response, "Register failed. Please check your information");
             const data = await response.json();
-            setLoading(false);
             console.log("Register Success: ", data);
             navigate('/login');
         }   
         catch (error) {
-            setLoading(false);
+            setErrorMessage(error.message || "Register failed. Please check your information");
             console.log("Register error: ", error.message);
         }
         finally{
@@ -63,6 +66,7 @@ const Register = () => {
                     <p>สร้างบัญชีสำหรับเพิ่มสินค้าและติดตามข้อมูลคลังสินค้า</p>
                 </div>
                 <Form onSubmit={handleSubmit}>
+                    {errorMessage && <div className="form-error" role="alert">{errorMessage}</div>}
                     <Form.Group controlId="formBasicUsername">
                         <Form.Control
                             type="text"

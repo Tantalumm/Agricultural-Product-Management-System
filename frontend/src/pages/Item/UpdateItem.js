@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Spinner from "../../components/Spinner";
 import "./UpdateItem.css";
 import "../../index.css";
+import { throwApiError } from "../../utils/apiError";
 
 const UpdateItem = () => {
     const { id } = useParams();
@@ -18,6 +19,7 @@ const UpdateItem = () => {
 
     const [file, setFile] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
 
     const handleInputChange = (event) => {
@@ -34,6 +36,7 @@ const UpdateItem = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setErrorMessage("");
 
         const data = new FormData();
         data.append("name", formData.name);
@@ -51,11 +54,12 @@ const UpdateItem = () => {
                 method: "PUT",
                 body: data
             });
+            await throwApiError(response, "Update item failed. Please check item information");
             const result = await response.text();
             console.log("Item Update Success: ", result);
             navigate("/ItemManagement");
         } catch (error) {
-            alert("Error: " + error.message);
+            setErrorMessage(error.message || "Update item failed. Please check item information");
             console.error("Error updating item:", error);
         } finally {
             setLoading(false);
@@ -78,6 +82,7 @@ const UpdateItem = () => {
                     <span>Item ID</span>
                     <strong>#{id}</strong>
                 </div>
+                {errorMessage && <div className="form-error" role="alert">{errorMessage}</div>}
 
                 <Form.Group controlId="FormBasicName" className="group-form">
                     <Form.Label>Name</Form.Label>

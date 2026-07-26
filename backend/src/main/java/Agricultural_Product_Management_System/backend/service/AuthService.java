@@ -31,21 +31,19 @@ public class AuthService {
         user.setPassword(encoder.encode(request.password()));
         return userRepository.save(user);
     }
+
     public LoginResponse login(LoginRequest request) {
-        try{
+        try {
             User user = userRepository.findByUsername(request.username()).orElse(null);
             if (user == null) {
                 return new LoginResponse(false, "Username not found");
             }
             if (!encoder.matches(request.password(), user.getPassword())) {
-                return new LoginResponse(false, "Wrong password");
+                return new LoginResponse(false, "Invalid username or password");
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return new LoginResponse(false, e.getMessage());
         }
         return new LoginResponse(true, "Login in successfully");
     }
 }
-
-

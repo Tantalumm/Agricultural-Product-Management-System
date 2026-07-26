@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import "./CreateItem.css"
 import "../../index.css"
+import { throwApiError } from "../../utils/apiError";
 
 const CreateItem = () => {
 
@@ -18,6 +19,7 @@ const CreateItem = () => {
 
     const [file, setFile] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -36,6 +38,7 @@ const CreateItem = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setErrorMessage("");
 
         const data = new FormData();
         data.append("name", formData.name);
@@ -53,12 +56,13 @@ const CreateItem = () => {
                 method: 'POST',
                 body: data
             });
+            await throwApiError(response, "Create item failed. Please check item information");
             const result = await response.text();
             console.log("Item Created Success: ", result);
             navigate('/');
         }
         catch (error) {
-            alert("Error: " + error.message);
+            setErrorMessage(error.message || "Create item failed. Please check item information");
             console.log("error: ", error.message);
         }
         finally{
@@ -76,6 +80,7 @@ const CreateItem = () => {
                     <p>เพิ่มรายละเอียดสินค้า ราคา จำนวน และรูปภาพให้พร้อมแสดงบนหน้าหลัก</p>
                 </div>
                 <Form onSubmit={handleSubmit}>
+                    {errorMessage && <div className="form-error" role="alert">{errorMessage}</div>}
                     <Form.Group controlId="FormBasicName" className="group-form">
                         <Form.Label>Name</Form.Label>
                         <Form.Control

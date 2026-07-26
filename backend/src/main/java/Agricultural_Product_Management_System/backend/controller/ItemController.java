@@ -2,6 +2,7 @@ package Agricultural_Product_Management_System.backend.controller;
 
 import Agricultural_Product_Management_System.backend.entity.Item;
 import Agricultural_Product_Management_System.backend.model.ItemRequest;
+import Agricultural_Product_Management_System.backend.model.ItemUpdateRequest;
 import Agricultural_Product_Management_System.backend.service.S3PresignService;
 import Agricultural_Product_Management_System.backend.service.S3Service;
 import jakarta.validation.constraints.NotNull;
@@ -31,7 +32,7 @@ public class ItemController {
 
     @PostMapping("/create")
     public String postItem(@ModelAttribute ItemRequest request,
-                           @RequestParam("file") MultipartFile file) {
+            @RequestParam("file") MultipartFile file) {
         try {
             String imageUpload = s3Service.uploadFile(file);
 
@@ -49,8 +50,8 @@ public class ItemController {
 
     @GetMapping("/search")
     public Page<Item> SearchItem(@RequestParam(required = false) String name,
-                                 @RequestParam(defaultValue = "0") int page,
-                                 @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         return itemService.searchItem(name, pageable);
     }
@@ -62,15 +63,21 @@ public class ItemController {
 
     @PutMapping("/update/{id}")
     public String UpdateItem(@PathVariable Long id,
-                           @ModelAttribute ItemRequest request,
-                           @RequestParam("file") MultipartFile file) {
-        try{
-            String imageUrl = s3Service.uploadFile(file);
+            @ModelAttribute ItemUpdateRequest request,
+            @RequestParam(value = "file", required = false) MultipartFile file) {
+        try {
+            String imageUrl = "";
+            String imageUpload = "";
 
-            itemService.updateItem(id, new ItemRequest(request.name(), request.description(), request.price(), request.quantity(), imageUrl));
+            if (file != null) {
+                imageUpload = s3Service.uploadFile(file);
+                imageUrl = extractKey(imageUpload);
+            }
+
+            itemService.updateItem(id, new ItemUpdateRequest(request.name(), request.description(), request.price(),
+                    request.quantity(), imageUrl));
             return "Item Update Successfully";
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             return "Item Update Failed" + ex.getMessage();
         }

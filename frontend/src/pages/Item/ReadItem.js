@@ -3,24 +3,28 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Spinner from "../../components/Spinner";
 import "./ReadItem.css";
 import "../../index.css";
+import { throwApiError } from "../../utils/apiError";
 
 const ReadItem = () => {
     const [loading, setLoading] = useState(false);
     const [item, setItem] = useState(null);
+    const [errorMessage, setErrorMessage] = useState("");
     const { id } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchItem = async () => {
             setLoading(true);
+            setErrorMessage("");
             try {
                 const response = await fetch(`http://localhost:8080/item/read/${id}`, {
                     method: "GET",
                 });
+                await throwApiError(response, "Cannot load item detail");
                 const data = await response.json();
                 setItem(data);
             } catch (error) {
-                alert("Error: " + error.message);
+                setErrorMessage(error.message || "Cannot load item detail");
                 console.log("Error fetching data");
             } finally {
                 setLoading(false);
@@ -35,7 +39,9 @@ const ReadItem = () => {
     if (!item) {
         return (
             <div className="pd-wrap">
-                <div className="pd-empty">No item data found</div>
+                <div className={errorMessage ? "page-error" : "pd-empty"} role={errorMessage ? "alert" : undefined}>
+                    {errorMessage || "No item data found"}
+                </div>
             </div>
         );
     }
